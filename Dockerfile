@@ -8,8 +8,7 @@ RUN apt-get update && \
     python3-redis \
     python3-pil \
     redis-server \
-    git \
-    python3-pip && \
+    git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -17,7 +16,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Clona o repositório do GitHub
-RUN git clone https://jeffersonfr@gmail.com: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@github.com/jeffersonfr/image-cache.git .
+RUN git clone "https://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@github.com/jeffersonfr/image-cache" .
 
 # Expõe a porta que o Flask vai usar
 EXPOSE 5000
