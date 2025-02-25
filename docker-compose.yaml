@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .  # Define o diretório onde o Dockerfile está localizado
+      dockerfile: Dockerfile  # Nome do Dockerfile
+    ports:
+      - "5000:5000"  # Expõe a porta 5000 do contêiner para a máquina host
+    depends_on:
+      - redis  # Garante que o serviço Redis seja iniciado antes da aplicação
+
+  redis:
+    image: redis:latest  # Usa a imagem oficial do Redis
+    ports:
+      - "6379:6379"  # Expõe a porta padrão do Redis
+    volumes:
+      - redis_data:/data  # Persiste os dados do Redis em um volume
+
+volumes:
+  redis_data:  # Define um volume para persistir os dados do Redis
