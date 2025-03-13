@@ -16,21 +16,16 @@ IMAGE_FOLDER = 'images'
 def get_image(directory, filename):
     filename = directory + "/" + filename
 
-    print("Filename: ", filename)
-
     # Verifica se a imagem está no cache do Redis
     cached_image = redis_client.get(filename)
 
-    print("Cached image: ", cached_image)
     if cached_image:
         # Se a imagem estiver no cache, retorna ela diretamente
         return send_file(BytesIO(cached_image), mimetype='image/jpeg', as_attachment=True, download_name='logo.jpeg')
 
     # Se não estiver no cache, tenta carregar a imagem do disco
     image_path = os.path.join(IMAGE_FOLDER, filename)
-    print("Image path: ", image_path)
     if not os.path.isfile(image_path):
-        print("File not found: ", image_path)
         abort(404)  # Retorna 404 se a imagem não existir
     
     # Abre a imagem usando Pillow
@@ -44,8 +39,6 @@ def get_image(directory, filename):
     # Armazena a imagem no cache do Redis
     redis_client.set(filename, img_byte_arr)
     
-    print("Caching image: ", filename)
-
     # Retorna a imagem
     return send_file(BytesIO(img_byte_arr), mimetype='image/jpeg', as_attachment=True, download_name='logo.jpeg')
 

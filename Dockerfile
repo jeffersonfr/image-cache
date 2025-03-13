@@ -15,8 +15,7 @@ RUN apt-get update && \
 # Define o diretório de trabalho
 WORKDIR /app
 
-# Clona o repositório do GitHub
-RUN git clone "https://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@github.com/jeffersonfr/image-cache" .
+COPY . .
 
 # Expõe a porta que o Flask vai usar
 EXPOSE 5000
