@@ -12,14 +12,15 @@ redis_client = redis.Redis(host='redis', port=6379, db=0)
 # Pasta onde as imagens estão armazenadas
 IMAGE_FOLDER = 'images'
 
-@app.route('/image/<filename>')
-def get_image(filename):
+@app.route('/image/<directory>/<filename>')
+def get_image(directory, filename):
+    filename = directory + "/" + filename
+
     # Verifica se a imagem está no cache do Redis
     cached_image = redis_client.get(filename)
-    
+
     if cached_image:
         # Se a imagem estiver no cache, retorna ela diretamente
-        print("return from cache: " + filename)
         return send_file(BytesIO(cached_image), mimetype='image/jpeg', as_attachment=True, download_name='logo.jpeg')
 
     # Se não estiver no cache, tenta carregar a imagem do disco
@@ -35,8 +36,6 @@ def get_image(filename):
     img.save(img_byte_arr, format='JPEG')
     img_byte_arr = img_byte_arr.getvalue()
     
-    print("caching: " + filename)
-
     # Armazena a imagem no cache do Redis
     redis_client.set(filename, img_byte_arr)
     
