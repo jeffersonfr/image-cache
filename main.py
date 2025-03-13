@@ -26,6 +26,7 @@ def get_image(directory, filename):
     # Se não estiver no cache, tenta carregar a imagem do disco
     image_path = os.path.join(IMAGE_FOLDER, filename)
     if not os.path.isfile(image_path):
+        print("File not found: ", image_path)
         abort(404)  # Retorna 404 se a imagem não existir
     
     # Abre a imagem usando Pillow
