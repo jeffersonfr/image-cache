@@ -8,16 +8,16 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - /var/www/html:/app/images
+      - /var/www/html/rooms:/app/images
     depends_on:
       - redis
 
   redis:
     image: redis:latest
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
+    #ports:
+      #- "6379:6379"
+    #volumes:
+      #- redis_data:/data
 
 volumes:
   redis_data:
