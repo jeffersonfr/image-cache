@@ -109,7 +109,7 @@ async fn main() -> std::io::Result<()> {
 
     // Criar cliente Redis
     let redis_client = Arc::new(Mutex::new(
-        Client::open("redis://192.168.0.195/").expect("Failed to connect to Redis")
+        Client::open("redis://redis/").expect("Failed to connect to Redis")
     ));
 
     HttpServer::new(move || {
