@@ -61,6 +61,7 @@ fn get_file_as_byte_vec(filename: &Path) -> Option<Vec<u8>> {
 fn is_valid_folder_name(name: &str) -> bool {
     !name.contains('/') && 
     !name.contains('\\') && 
+    !name.contains('.') && 
     !name.contains("..") && 
     !name.is_empty() &&
     name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
@@ -69,8 +70,13 @@ fn is_valid_folder_name(name: &str) -> bool {
 #[get("/image/{directory}/{filename}")]
 async fn get_image(params: web::Path<(String, String)>, state: web::Data<AppState>) -> Result<HttpResponse, Error> {
     let directory = params.0.as_str();
+    let filename = params.1.as_str();
 
     if !is_valid_folder_name(&directory) {
+        return Err(actix_web::error::ErrorBadRequest("Invalid access"));
+    }
+
+    if !is_valid_folder_name(&filename) {
         return Err(actix_web::error::ErrorBadRequest("Invalid access"));
     }
 
