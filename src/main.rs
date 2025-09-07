@@ -63,7 +63,7 @@ fn is_valid_folder_name(name: &str) -> bool {
     !name.contains('\\') && 
     !name.contains("..") && 
     !name.is_empty() &&
-    name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
+    name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_' || c == '.')
 }
 
 #[get("/image/{directory}/{filename}")]
