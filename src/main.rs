@@ -61,7 +61,6 @@ fn get_file_as_byte_vec(filename: &Path) -> Option<Vec<u8>> {
 fn is_valid_folder_name(name: &str) -> bool {
     !name.contains('/') && 
     !name.contains('\\') && 
-    !name.contains('.') && 
     !name.contains("..") && 
     !name.is_empty() &&
     name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
